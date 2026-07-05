@@ -7,12 +7,11 @@
     li a7, 0x0A000000   # syscall number for create process
     li a6, 0x0
 
-    la a0, dummy_job    # load address of dummy_job
 job_loop:
     beq t1, zero, exit_job # if no more dummy jobs to create,
+    la a0, dummy_job    # load address of dummy_job
     ecall               # create dummy job
-    la t0, dummy_job
-    bne a0, t0, failure
+    bne a0, zero, failure
     addi t1, t1, -1     # decrement the number of dummy jobs
     j job_loop          # repeat until all dummy jobs are created
 exit_job:              
